@@ -2233,9 +2233,9 @@ srandom(time(NULL) ^ getpid());
         #endif
         for (int i = 0; i < multicastAddrsNum; i++) {
             for (int x = 0; x < maxifs; x++) {
-                struct ip_mreq mreq;
-                memset(&mreq, 0, sizeof(struct ip_mreq));
-                mreq.imr_interface.s_addr = ifs[x].ifaddr.s_addr;
+                struct ip_mreqn mreq;
+                memset(&mreq, 0, sizeof(struct ip_mreqn));
+                mreq.imr_ifindex = ifs[x].ifindex;;
                 mreq.imr_multiaddr.s_addr = inet_addr(multicastAddrs[i]);
                 DPRINT("IP_ADD_MEMBERSHIP:\t\t%s %s\n",inet_ntoa(ifs[x].ifaddr),multicastAddrs[i]);
                 if(setsockopt(rcv, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq))<0){
